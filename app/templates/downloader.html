@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader | MultiTool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/downloader.css"> <!-- Link to the new CSS file -->
+    
+</head>
+<body class="light-mode">
+    
+    <!-- Navigation -->
+   {% include 'partials/_header.html' %}
+    
+    <!-- Main Content -->
+    <div class="container main-content">
+        <div class="title-section">
+            <h1><span id="platform-name">Video</span> Downloader</h1>
+            <p id="platform-subtitle">Download videos from your favorite social platforms in seconds</p>
+        </div>
+        
+        <div class="download-container">
+            <div class="url-input-container">
+                <input type="text" id="url-input" placeholder="Paste your video link here..." autocomplete="off">
+            </div>
+            
+            <button class="download-btn" id="download-btn">
+                <i class="fas fa-arrow-down"></i>
+                <span>Download Now</span>
+            </button>
+        </div>
+        
+        <div class="results-section" id="results-section">
+            <div class="processing-indicator">
+                <i class="fas fa-cog fa-spin"></i>
+                <span>Processing your download...</span>
+            </div>
+            
+            <div class="status-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            
+            <div class="download-result" id="download-result">
+                <div class="download-info">
+                    <div class="media-thumbnail">
+                        <img src="" alt="Video Thumbnail" id="video-thumbnail" class="thumbnail-img">
+                        <div class="thumbnail-placeholder" id="thumbnail-placeholder">
+                            <i class="fas fa-video"></i>
+                            <span>No Thumbnail</span>
+                        </div>
+                    </div>
+                    <div class="media-details" id="media-details">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+                <div class="available-formats" id="available-formats">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Lightning Fast</h3>
+                <p class="feature-desc">Download videos in seconds with our optimized servers and parallel processing technology.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3 class="feature-title">Multi-Platform</h3>
+                <p class="feature-desc">Support for YouTube, Instagram, TikTok, Facebook, Twitter and many more platforms.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="feature-title">100% Safe</h3>
+                <p class="feature-desc">No registration required. We don't store your videos or personal information.</p>
+            </div>  
+        </div>
+    </div>
+    
+    {% include 'partials/_footer.html' %}
+
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script>
+        // Set platform-specific UI elements based on URL parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const platform = urlParams.get('platform') || 'video'; // Default
+            
+            const platformData = {
+                'youtube': { name: 'YouTube', subtitle: 'Download videos from YouTube in any format', color: '#FF0000' },
+                'instagram': { name: 'Instagram', subtitle: 'Download Reels, IGTV, and Stories', color: '#E1306C' },
+                'tiktok': { name: 'TikTok', subtitle: 'Download without watermark in HD quality', color: '#000000' },
+                'facebook': { name: 'Facebook', subtitle: 'Download videos from Facebook', color: '#1877F2' },
+                'twitter': { name: 'Twitter', subtitle: 'Download videos from Twitter', color: '#1DA1F2' },
+                'video': { name: 'Video', subtitle: 'Download videos from your favorite social platforms', color: 'var(--primary-light)' } // Default color from common.css
+            };
+            
+            const data = platformData[platform] || platformData['video'];
+            document.title = `${data.name} Downloader | MultiTool`;
+            document.getElementById('url-input').placeholder = `Paste ${data.name} video link here...`;
+            document.getElementById('platform-name').textContent = data.name;
+            document.getElementById('platform-subtitle').textContent = data.subtitle;
+
+            if (platform !== 'video') {
+                document.documentElement.style.setProperty('--primary', data.color);
+                document.documentElement.style.setProperty('--primary-hover', `${data.color}CC`);
+            }
+        });
+    </script>
+</body>
+</html>
